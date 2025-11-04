@@ -12,7 +12,7 @@ Some practical applications:
 - Validating data transformations
 - Approving automated actions in critical systems
 
-Run `pip install openai httpx rich agno` to install dependencies.
+Run `pip install google-genai httpx rich agno` to install dependencies.
 """
 
 import json
@@ -20,6 +20,7 @@ from textwrap import dedent
 
 import httpx
 from agno.agent import Agent
+from agno.models.google import Gemini
 from agno.tools import tool
 from agno.utils import pprint
 from rich.console import Console
@@ -57,6 +58,7 @@ def get_top_hackernews_stories(num_stories: int) -> str:
 
 # Initialize the agent with a tech-savvy personality and clear instructions
 agent = Agent(
+    model=Gemini(id="gemini-2.0-flash"),
     description="A Tech News Assistant that fetches and summarizes Hacker News stories",
     instructions=dedent("""\
         You are an enthusiastic Tech Reporter

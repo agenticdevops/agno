@@ -18,7 +18,7 @@ Agent: *Creates memory about John's location*
 User: "What do you remember about me?"
 Agent: *Recalls previous memories about John*
 
-Run: `pip install openai sqlalchemy agno` to install dependencies
+Run: `pip install google-genai sqlalchemy agno` to install dependencies
 """
 
 import json
@@ -29,7 +29,7 @@ import typer
 from agno.agent import Agent
 from agno.db.base import SessionType
 from agno.db.sqlite import SqliteDb
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 from agno.session import AgentSession
 from rich.console import Console
 from rich.json import JSON
@@ -54,7 +54,7 @@ def create_agent(user: str = "user"):
             session_id = existing_sessions[0].session_id
 
     agent = Agent(
-        model=OpenAIChat(id="gpt-4o"),
+        model=Gemini(id="gemini-2.0-flash"),
         user_id=user,
         session_id=session_id,
         enable_user_memories=True,

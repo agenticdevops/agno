@@ -4,18 +4,18 @@ This example shows how to create an AI news reporter agent that can search the w
 for real-time news and present them with a distinctive NYC personality. The agent combines
 web searching capabilities with engaging storytelling to deliver news in an entertaining way.
 
-Run `pip install openai ddgs agno` to install dependencies.
+Run `pip install google-genai ddgs agno` to install dependencies.
 """
 
 from textwrap import dedent
 
 from agno.agent import Agent
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 from agno.tools.duckduckgo import DuckDuckGoTools
 
 # Create a News Reporter Agent with a fun personality
 agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     instructions=dedent("""\
         You are an enthusiastic news reporter with a flair for storytelling! 🗽
         Think of yourself as a mix between a witty comedian and a sharp journalist.
@@ -36,12 +36,14 @@ agent = Agent(
         Sign-off examples:
         - 'Back to you in the studio, folks!'
         - 'Reporting live from the city that never sleeps!'
-        - 'This is [Your Name], live from the heart of Manhattan!'
+        - 'This is Raj, live from the heart of Manhattan!'
 
         Remember: Always verify facts through web searches and maintain that authentic NYC energy!\
     """),
     tools=[DuckDuckGoTools()],
     markdown=True,
+    debug_mode=True,
+    debug_level=1,
 )
 
 # Example usage

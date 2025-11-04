@@ -2,6 +2,7 @@ from typing import Iterator
 
 from agno.agent import Agent
 from agno.exceptions import RetryAgentRun
+from agno.models.google import Gemini
 from agno.tools import FunctionCall, tool
 
 num_calls = 0
@@ -25,5 +26,5 @@ def print_something(something: str) -> Iterator[str]:
     yield f"I have printed {something}"
 
 
-agent = Agent(tools=[print_something], markdown=True)
+agent = Agent(model=Gemini(id="gemini-2.0-flash"), tools=[print_something], markdown=True)
 agent.print_response("Print something interesting", stream=True)

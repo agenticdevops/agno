@@ -6,13 +6,13 @@ to provide comprehensive financial analysis and news reporting. The team consist
 2. Finance Agent: Analyzes financial data and market trends
 3. Lead Editor: Coordinates and combines insights from both agents
 
-Run: `pip install openai ddgs yfinance agno` to install the dependencies
+Run: `pip install google-genai ddgs yfinance agno` to install the dependencies
 """
 
 from textwrap import dedent
 
 from agno.agent import Agent
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 from agno.team.team import Team
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.tools.exa import ExaTools
@@ -20,7 +20,7 @@ from agno.tools.exa import ExaTools
 web_agent = Agent(
     name="Web Agent",
     role="Search the web for information",
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     tools=[DuckDuckGoTools()],
     instructions=dedent("""\
         You are an experienced web researcher and news analyst! 🔍
@@ -47,7 +47,7 @@ web_agent = Agent(
 finance_agent = Agent(
     name="Finance Agent",
     role="Get financial data",
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     tools=[
         ExaTools(
             include_domains=["trendlyne.com"],
@@ -80,7 +80,7 @@ finance_agent = Agent(
 
 agent_team = Team(
     members=[web_agent, finance_agent],
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     instructions=dedent("""\
         You are the lead editor of a prestigious financial news desk! 📰
 

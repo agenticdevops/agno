@@ -15,18 +15,18 @@ Example images to try:
 - Breaking news scenes
 - Historical locations
 
-Run `pip install ddgs agno` to install dependencies.
+Run `pip install google-genai ddgs agno` to install dependencies.
 """
 
 from textwrap import dedent
 
 from agno.agent import Agent
 from agno.media import Image
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 from agno.tools.duckduckgo import DuckDuckGoTools
 
 agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     description=dedent("""\
         You are a world-class visual journalist and cultural correspondent with a gift
         for bringing images to life through storytelling! 📸✨ With the observational skills

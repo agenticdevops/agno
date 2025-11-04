@@ -1,7 +1,7 @@
 """Test session state management with a simple counter"""
 
 from agno.agent import Agent
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 
 
 def increment_counter(session_state) -> str:
@@ -24,7 +24,7 @@ def get_counter(session_state) -> str:
 
 # Create an Agent that maintains state
 agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     # Initialize the session state with a counter starting at 0
     session_state={"count": 0},
     tools=[increment_counter, get_counter],
@@ -37,7 +37,8 @@ agent = Agent(
 
 # Test the counter functionality
 print("Testing counter functionality...")
-agent.print_response(
-    "Let's increment the counter 3 times and observe the state changes!", stream=True
+response = agent.run(
+    "Let's increment the counter 3 times and observe the state changes!"
 )
-print(f"Final session state: {agent.get_session_state()}")
+print(response.content)
+print(f"\nFinal session state: {response.session_state}")

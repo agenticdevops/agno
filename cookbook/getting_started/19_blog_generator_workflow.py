@@ -15,7 +15,7 @@ Key capabilities:
 - Automatic content caching for efficiency
 - Source attribution and fact verification
 
-Run `pip install openai googlesearch-python newspaper4k lxml_html_clean sqlalchemy agno` to install dependencies.
+Run `pip install google-genai googlesearch-python newspaper4k lxml_html_clean sqlalchemy agno` to install dependencies.
 """
 
 import asyncio
@@ -25,7 +25,7 @@ from typing import Dict, Optional
 
 from agno.agent import Agent
 from agno.db.sqlite import SqliteDb
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 from agno.tools.googlesearch import GoogleSearchTools
 from agno.tools.newspaper4k import Newspaper4kTools
 from agno.utils.log import logger
@@ -62,7 +62,7 @@ class ScrapedArticle(BaseModel):
 # --- Agents ---
 research_agent = Agent(
     name="Blog Research Agent",
-    model=OpenAIChat(id="gpt-4o-mini"),
+    model=Gemini(id="gemini-2.0-flash"),
     tools=[GoogleSearchTools()],
     description=dedent("""\
     You are BlogResearch-X, an elite research assistant specializing in discovering
@@ -93,7 +93,7 @@ research_agent = Agent(
 
 content_scraper_agent = Agent(
     name="Content Scraper Agent",
-    model=OpenAIChat(id="gpt-4o-mini"),
+    model=Gemini(id="gemini-2.0-flash"),
     tools=[Newspaper4kTools()],
     description=dedent("""\
     You are ContentBot-X, a specialist in extracting and processing digital content
@@ -125,7 +125,7 @@ content_scraper_agent = Agent(
 
 blog_writer_agent = Agent(
     name="Blog Writer Agent",
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     description=dedent("""\
     You are BlogMaster-X, an elite content creator combining journalistic excellence
     with digital marketing expertise. Your strengths include:

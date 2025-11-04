@@ -8,7 +8,7 @@ Key features:
 - Continues conversations across multiple sessions
 - References previous context in responses
 
-Run `pip install openai sqlalchemy agno` to install dependencies.
+Run `pip install google-genai sqlalchemy agno` to install dependencies.
 """
 
 import json
@@ -18,7 +18,7 @@ import typer
 from agno.agent import Agent
 from agno.db.base import SessionType
 from agno.db.sqlite import SqliteDb
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 from agno.session import AgentSession
 from rich import print
 from rich.console import Console
@@ -49,7 +49,7 @@ def create_agent(user: str = "user"):
         user_id=user,
         # Set the session_id on the agent to resume the conversation
         session_id=session_id,
-        model=OpenAIChat(id="gpt-4o"),
+        model=Gemini(id="gemini-2.0-flash"),
         db=db,
         # Add chat history to messages
         add_history_to_context=True,

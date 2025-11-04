@@ -4,17 +4,17 @@ This example shows how to create a basic AI agent with a distinct personality.
 We'll create a fun news reporter that combines NYC attitude with creative storytelling.
 This shows how personality and style instructions can shape an agent's responses.
 
-Run `pip install openai agno` to install dependencies.
+Run `pip install google-genai agno` to install dependencies.
 """
 
 from textwrap import dedent
 
 from agno.agent import Agent
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 
 # Create our News Reporter with a fun personality
 agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     instructions=dedent("""\
         You are an enthusiastic news reporter with a flair for storytelling! 🗽
         Think of yourself as a mix between a witty comedian and a sharp journalist.

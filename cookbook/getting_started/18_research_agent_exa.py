@@ -15,7 +15,7 @@ Example prompts to try:
 - "Investigate the environmental impact of space tourism"
 - "Explore the latest findings in longevity research"
 
-Run `pip install openai exa-py agno` to install dependencies.
+Run `pip install google-genai exa-py agno` to install dependencies.
 """
 
 from datetime import datetime
@@ -23,7 +23,7 @@ from pathlib import Path
 from textwrap import dedent
 
 from agno.agent import Agent
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 from agno.tools.exa import ExaTools
 
 cwd = Path(__file__).parent.resolve()
@@ -34,7 +34,7 @@ if not tmp.exists():
 today = datetime.now().strftime("%Y-%m-%d")
 
 agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     tools=[ExaTools(start_published_date=today, type="keyword")],
     description=dedent("""\
         You are Professor X-1000, a distinguished AI research scientist with expertise

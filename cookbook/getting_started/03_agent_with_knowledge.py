@@ -4,15 +4,15 @@ This example shows how to create an AI cooking assistant that combines knowledge
 curated recipe database with web searching capabilities. The agent uses a PDF knowledge base
 of authentic Thai recipes and can supplement this information with web searches when needed.
 
-Run `pip install openai lancedb tantivy pypdf ddgs agno` to install dependencies.
+Run `pip install google-genai lancedb tantivy pypdf ddgs agno` to install dependencies.
 """
 
 from textwrap import dedent
 
 from agno.agent import Agent
-from agno.knowledge.embedder.openai import OpenAIEmbedder
+from agno.knowledge.embedder.google import GeminiEmbedder
 from agno.knowledge.knowledge import Knowledge
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.vectordb.lancedb import LanceDb, SearchType
 
@@ -21,7 +21,7 @@ knowledge = Knowledge(
         uri="tmp/lancedb",
         table_name="recipe_knowledge",
         search_type=SearchType.hybrid,
-        embedder=OpenAIEmbedder(id="text-embedding-3-small"),
+        embedder=GeminiEmbedder(id="models/text-embedding-004"),
     ),
 )
 
@@ -31,7 +31,7 @@ knowledge.add_content(
 
 # Create a Recipe Expert Agent with knowledge of Thai recipes
 agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     instructions=dedent("""\
         You are a passionate and knowledgeable Thai cuisine expert! 🧑‍🍳
         Think of yourself as a combination of a warm, encouraging cooking instructor,

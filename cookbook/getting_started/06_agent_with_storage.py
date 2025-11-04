@@ -12,7 +12,7 @@ Example prompts to try:
 - "What are essential ingredients for a Thai pantry?"
 - "How do I make Thai basil chicken (Pad Kra Pao)?"
 
-Run `pip install openai lancedb tantivy pypdf ddgs sqlalchemy agno` to install dependencies.
+Run `pip install google-genai lancedb tantivy pypdf ddgs sqlalchemy agno` to install dependencies.
 """
 
 from textwrap import dedent
@@ -22,9 +22,9 @@ import typer
 from agno.agent import Agent
 from agno.db.base import SessionType
 from agno.db.sqlite import SqliteDb
-from agno.knowledge.embedder.openai import OpenAIEmbedder
+from agno.knowledge.embedder.google import GeminiEmbedder
 from agno.knowledge.knowledge import Knowledge
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 from agno.session import AgentSession
 from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.vectordb.lancedb import LanceDb, SearchType
@@ -35,7 +35,7 @@ agent_knowledge = Knowledge(
         uri="tmp/lancedb",
         table_name="recipe_knowledge",
         search_type=SearchType.hybrid,
-        embedder=OpenAIEmbedder(id="text-embedding-3-small"),
+        embedder=GeminiEmbedder(id="models/text-embedding-004"),
     ),
 )
 
@@ -64,7 +64,7 @@ def recipe_agent(user: str = "user"):
     agent = Agent(
         user_id=user,
         session_id=session_id,
-        model=OpenAIChat(id="gpt-4o"),
+        model=Gemini(id="gemini-2.0-flash"),
         instructions=dedent("""\
             You are a passionate and knowledgeable Thai cuisine expert! 🧑‍🍳
             Think of yourself as a combination of a warm, encouraging cooking instructor,

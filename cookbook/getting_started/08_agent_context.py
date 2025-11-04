@@ -3,7 +3,7 @@
 This example shows how to inject external dependencies into an agent.
 The context is evaluated when the agent is run, acting like dependency injection for Agents.
 
-Run `pip install openai agno` to install dependencies.
+Run `pip install google-genai agno` to install dependencies.
 """
 
 import json
@@ -11,7 +11,7 @@ from textwrap import dedent
 
 import httpx
 from agno.agent import Agent
-from agno.models.openai import OpenAIChat
+from agno.models.google import Gemini
 
 
 def get_top_hackernews_stories(num_stories: int = 5) -> str:
@@ -42,7 +42,7 @@ def get_top_hackernews_stories(num_stories: int = 5) -> str:
 
 # Create a Context-Aware Agent that can access real-time HackerNews data
 agent = Agent(
-    model=OpenAIChat(id="gpt-4o"),
+    model=Gemini(id="gemini-2.0-flash"),
     # Each function in the context is evaluated when the agent is run,
     # think of it as dependency injection for Agents
     dependencies={"top_hackernews_stories": get_top_hackernews_stories},
